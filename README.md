@@ -1,6 +1,8 @@
-# ✈️ Assistant IA Souverain — DGAC
+# ✈️ Assistant IA réglementaire — aéronautique
 
 <div align="center">
+
+![Assistant RAG aéronautique](assets/portfolio-cover.png)
 
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![LangChain](https://img.shields.io/badge/LangChain-0.2-1C3C3C?style=for-the-badge&logo=chainlink&logoColor=white)
@@ -11,8 +13,9 @@
 
 <br/>
 
-**Interrogez vos documents réglementaires aéronautiques en langage naturel.**
-Réponses sourcées en **0.3 seconde** · 100% souverain 🇫🇷 · Zéro donnée transmise à l'étranger
+**Interrogez des documents réglementaires aéronautiques en langage naturel et obtenez des réponses accompagnées de leurs sources.**
+
+Prototype RAG · Index vectoriel ChromaDB · Inférence Groq · Interface Streamlit
 
 <br/>
 
@@ -26,7 +29,7 @@ Réponses sourcées en **0.3 seconde** · 100% souverain 🇫🇷 · Zéro donn�
 
 Ce projet est né d'un constat simple : les agents de la DSAC (Direction de la Sécurité de l'Aviation Civile) passent des heures à chercher une information précise dans des centaines de pages de rapports annuels, circulaires EASA et règlements OACI.
 
-**Ce système répond en 0.3 seconde, cite la source exacte, et ne transmet aucune donnée à l'extérieur.**
+Le prototype associe une indexation vectorielle locale avec ChromaDB à une inférence réalisée via l’API Groq. Les extraits nécessaires à la génération sont donc transmis au fournisseur d’inférence lors d’une requête.
 
 > Développé de façon autonome et présenté en démonstration live lors d'un entretien à la DSAC en mars 2026. Le recruteur a pu interroger en temps réel le Rapport Annuel de Sécurité Aérienne 2024.
 
@@ -41,7 +44,7 @@ Ce projet est né d'un constat simple : les agents de la DSAC (Direction de la S
 | 🎯 Score de pertinence | **100%** |
 | ⚡ Requêtes depuis le cache | **36%** |
 | 💸 Coût d'infrastructure | **0 €** |
-| 🔒 Données transmises à l'étranger | **0** |
+| 🔒 Index et embeddings | **Stockés localement** |
 
 > **Comparaison** : solution précédente avec Ollama local → 168 secondes par réponse. Le choix architectural a multiplié la vitesse par **560**.
 
@@ -89,18 +92,18 @@ Ce projet est né d'un constat simple : les agents de la DSAC (Direction de la S
 
 ---
 
-## 🔒 Souveraineté des données
+## 🔒 Architecture et traitement des données
 
-Dans l'aéronautique, les données sont sensibles. Manuels de maintenance, rapports d'incidents, procédures opérationnelles — les envoyer à ChatGPT ou Claude, c'est les transférer sur des serveurs américains.
+Dans l'aéronautique, la confidentialité des documents doit être prise en compte dès la conception. Ce prototype conserve localement les embeddings et l'index vectoriel, puis transmet à Groq les extraits nécessaires pour générer chaque réponse.
 
-| Composant | Solution | Localisation |
+| Composant | Solution | Traitement |
 |-----------|---------|-------------|
-| LLM | Groq API (llama-3.1-8b-instant) | Infrastructure européenne |
-| Embeddings | Sentence-Transformers | **100% local** — aucun appel API |
-| Base vectorielle | ChromaDB | **Sur disque local** |
-| Interface | Streamlit | **En local** |
+| LLM | Groq API (llama-3.1-8b-instant) | Inférence via un service externe |
+| Embeddings | Sentence-Transformers | Local — aucun appel API |
+| Base vectorielle | ChromaDB | Sur disque local |
+| Interface | Streamlit | Exécution locale |
 
-✅ Conforme **RGPD**
+> Pour un usage avec des documents sensibles, une version entièrement locale du modèle ou une infrastructure approuvée par l'organisation serait nécessaire.
 ✅ Recommandations **DINUM** (programme Albert)
 ✅ Bonnes pratiques **ANSSI**
 
@@ -257,7 +260,7 @@ CACHE_SIZE       = 100                                        # Taille du cache
 
 ## 📈 Roadmap
 
-- [x] Pipeline RAG souverain opérationnel
+- [x] Pipeline RAG opérationnel avec index vectoriel local
 - [x] Interface Streamlit glassmorphisme dark theme
 - [x] Cache intelligent + dashboard analytics
 - [x] Export PDF + feedback utilisateur
@@ -297,6 +300,6 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 ⭐ **Si ce projet vous a été utile, n'hésitez pas à lui mettre une étoile !**
 
-*Développé avec ❤️ pour la souveraineté numérique française 🇫🇷*
+*Développé avec ❤️ pour faciliter l'accès à l'information réglementaire aéronautique.*
 
 </div>
